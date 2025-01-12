@@ -52,7 +52,7 @@ async doEverything(){
     
     const naturalDisasterPrompt = "A " + likelyDisaster + " is likely to occur where I live. I have " + this.houseHoldInfo.getHouseholdSize() + " in my household." +
     this.houseHoldInfo.generatePetsPrompt() + this.houseHoldInfo.generateInfantPrompt() + this.houseHoldInfo.generateChildPrompt() + this.houseHoldInfo.generateElderPrompt() + this.houseHoldInfo.generateIllPrompt() + this.houseHoldInfo.generateDisabledPrompt()
-     + "Choose from this list of items only " + itemList + ", provide a simple bullet point list of what is necessary for a preparedness kit that I should pack. I want nothing except for what I requested. ";
+     + "Choose from this list of items only " + itemList + ", provide a simple list seperated by commas of what is necessary for a preparedness kit that I should pack. I want nothing except for what I requested. ";
     
     let message2 = [
         { role: "system", content: "You are an expert of natural disaster preparedness" },
@@ -114,13 +114,15 @@ async doEverything(){
     
     let escapePlanParagraph = completion4.choices[0].message.content
 
-    let items;
-
-    //for (let i = 1; ) {
-
-    //}
+    let items = listOfItemsToPack.split(',');
     
+    for (let i = 0; i < items.length; i++) {
+        items[i] = items[i].trimStart();
+    }
 
+    if (items[items.length - 1].endsWith('.')) {
+        items[items.length - 1] = items[items.length - 1].slice(0, -1);
+    }
 
     let dictionary = 
         {
@@ -129,7 +131,6 @@ async doEverything(){
         story: listDetails+escapePlanParagraph // text block as single string
         }
     
-    //console.log(likelyDisaster+"\n" +  listOfItemsToPack +"\n"+listDetails+"\n" + escapePlanParagraph);
  
     return dictionary;
     }

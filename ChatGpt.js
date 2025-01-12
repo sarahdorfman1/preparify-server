@@ -1,5 +1,7 @@
 import OpenAI from "openai";
-const openai = new OpenAI();
+import dotenv from 'dotenv';  // Import dotenv package
+dotenv.config();  // Load .env variables
+const openai = new OpenAI({ apiKey: process.env.APIKEY });
 class ChatGpt{
 
 constructor(city, country, houseHoldInfo){
@@ -9,6 +11,9 @@ constructor(city, country, houseHoldInfo){
 }
 
 async doEverything(){
+    const apiKey = process.env.APIKEY
+    console.log("hello");
+    console.log(apiKey);
     //we are limiting the list of disasters but it can be expanded to include things such as political upheavals, wars, famine etc
     const naturalDisasterOptions = ["Blizzard" , "Typhoon", "Hurricane", "Cyclone", "Tornado", "Drought", "Wildfire", "Flood", "Volcanic Eruption", "High Magnitude Earthquake", "Tsunami"];
 
@@ -45,7 +50,7 @@ async doEverything(){
     const completion1 = await openai.chat.completions.create({
         model: "gpt-4o-mini",
         messages: message1,
-        temperature: 0
+        temperature: 0,
     });
     
     let likelyDisaster = completion1.choices[0].message.content

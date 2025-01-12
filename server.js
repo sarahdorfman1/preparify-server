@@ -1,11 +1,16 @@
 import express from 'express';
+import cors from 'cors'
 import { HouseholdInfo } from './HouseholdInfo.js'
 import { ChatGpt } from "./ChatGpt.js";
 
+
 const app = express();
-const port = 3000;
+const port = 4000;
 
 app.use(express.json());
+
+app.use(cors()); // Allow only this origin
+
 
 app.get('/', (req, res) => {
     console.log("hello world!");

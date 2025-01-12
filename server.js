@@ -7,6 +7,9 @@ const port = 3000;
 
 app.use(express.json());
 
+app.get('/', (req, res) => {
+    console.log("hello world!");
+})
 /**
  * Client (react app) will send profile data to "/data"
  * Server (us) will send back disaster info to client in the response
